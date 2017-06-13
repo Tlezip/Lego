@@ -23,14 +23,19 @@ class Section(models.Model):
 
 class Material(models.Model):
     TYPE_CHOICES = (
-        (4, 'Audio'),
         (0, 'Video'),
         (1, 'WebLink'),
         (2, 'Document'),
+        (3, 'Test'),
+        (4, 'Audio'),
         (5, 'Scorm'),
-        (3, 'Test')
+        (6, 'FileUpload')
     )
 
+    sort = models.IntegerField(default=0)
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
     type = models.IntegerField(choices=TYPE_CHOICES, default=0)
+
+    def create(self):
+        self.sort =Material.object.count() + 1
