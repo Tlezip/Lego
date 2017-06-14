@@ -1,11 +1,11 @@
 from django.db import models
-from legocourse.models import Material
-
+import datetime
 
 
 class Video(models.Model):
-    material = models.OneToOneField(Material, on_delete=models.CASCADE, primary_key=True)
-    image = models.ImageField(upload_to='weblink/%Y/%m/')
-    duration = models.DurationField()
-    status = models.IntegerField()
-    type = models.IntegerField()
+    name = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='video/%Y/%m/')
+    duration = models.DurationField(default=datetime.timedelta(0))
+    video_url = models.CharField(max_length=200)
+    status = models.IntegerField(default=0)
+    type = models.IntegerField(default=0)

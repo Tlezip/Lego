@@ -1,7 +1,6 @@
 from django.db import models
 
 
-
 class Course(models.Model):
     name = models.CharField(max_length=200)
     image = models.ImageField(upload_to='course/%Y/%m/')
@@ -9,12 +8,12 @@ class Course(models.Model):
     condition = models.TextField(blank=True, null=True)
     desc = models.TextField(blank=True, null=True)
     is_display = models.BooleanField(default=True)
-    term_info = models.TextField(blank=True, null=True)
+    # term_info = models.TextField(blank=True, null=True)
 
 
 class Section(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    outline_name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
     sort = models.IntegerField(default=0)
 
     def create(self):
@@ -32,10 +31,14 @@ class Material(models.Model):
         (6, 'FileUpload')
     )
 
-    sort = models.IntegerField(default=0)
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
-    name = models.CharField(max_length=200)
     type = models.IntegerField(choices=TYPE_CHOICES, default=0)
 
+    content_type = models.ForeignKey('contenttypes.ContentType')
+    content = models.IntegerField()
+
+    sort = models.IntegerField(db_index=True, default=1)
+
     def create(self):
-        self.sort =Material.object.count() + 1
+        self.sort = Material.object.count() + 1
+        self.save()

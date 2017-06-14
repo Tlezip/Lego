@@ -1,9 +1,10 @@
 from django.db import models
-from legocourse.models import Material
 
+import datetime
 
 
 class Audio(models.Model):
-    material = models.OneToOneField(Material, on_delete=models.CASCADE, primary_key=True)
-    image = models.ImageField(upload_to='weblink/%Y/%m/')
-    duration = models.DurationField()
+    name = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='audio/%Y/%m/', null=True, blank=True)
+    duration = models.DurationField(default=datetime.timedelta(0))
+    audio_url = models.CharField(max_length=200, default='')
