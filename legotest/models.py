@@ -16,7 +16,7 @@ class Test(models.Model):
 	descripe = models.TextField()
 
 class Section(models.Model):
-	testid = models.ForeignKey('Test')
+	testid = models.ForeignKey('Test' , default = 0)
 	sectionNum = models.AutoField(primary_key=True)
 	fullscore = models.IntegerField(default = 0)
 	pass_score = models.IntegerField()

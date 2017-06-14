@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'legovideo',
     'legoaudio',
     'legoscorm',
+    'legotestquestion',
 ]
 
 MIDDLEWARE = [
