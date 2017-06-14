@@ -9,3 +9,5 @@ class Video(models.Model):
     video_url = models.CharField(max_length=200)
     status = models.IntegerField(default=0)
     type = models.IntegerField(default=0)
+    timestamp = models.DateTimeField(auto_now_add=True, db_index=True)
+    timeupdate = models.DateTimeField(auto_now=True)

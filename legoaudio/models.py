@@ -8,3 +8,5 @@ class Audio(models.Model):
     image = models.ImageField(upload_to='audio/%Y/%m/', null=True, blank=True)
     duration = models.DurationField(default=datetime.timedelta(0))
     audio_url = models.CharField(max_length=200, default='')
+    timestamp = models.DateTimeField(auto_now_add=True, db_index=True)
+    timeupdate = models.DateTimeField(auto_now=True)
