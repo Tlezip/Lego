@@ -29,7 +29,7 @@ class Section(models.Model):
 	# typequestion = models.CharField(max_length=50)
 
 class Question(models.Model):
-    questionid = models.IntegerField(null=True)
+    questionid = models.ForeignKey('legotestquestion.Question',null=True)
 	# sectionNum = models.ForeignKey(Section)
 	# typequestion = models.CharField(default = "Section.Type << how to do" , max_length=50)
 	# name = models.CharField(max_length=50)
