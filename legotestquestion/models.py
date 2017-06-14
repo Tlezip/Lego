@@ -3,7 +3,7 @@ from django.db import models
 
 class Bank(models.Model):
 	# questions = models.ManyToManyField('legotestquestion.Question')
-	name = models.CharField(max_length=50)
+	name = models.CharField(max_length=50, default='')
 
 class Question(models.Model):
 	TYPE_CHOICES = (

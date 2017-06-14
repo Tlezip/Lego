@@ -18,9 +18,8 @@ class Section(models.Model):
 		(0, 'Basic'),
 		(1, 'Bank')
 	)
-
-	test = models.ForeignKey('Test', default = 0)
-	pull = models.IntegerField(choices=PULL_CHOICES)
+	test = models.ForeignKey('Test', default=0)
+	pull = models.IntegerField(choices=PULL_CHOICES , default=0)
 	num = models.AutoField(primary_key=True)
 	name = models.CharField(max_length=50, default='')
 	full_score = models.IntegerField(default=0)
@@ -37,12 +36,12 @@ class Question(models.Model):
 	# answer = models.CharField(max_length=50)
 	# numshow = models.IntegerField()
 
-# class Condition(models.Model):
-# 	CONDITION_CHOICE = (
-#         (0, 'random'),
-#         (1, 'choose')
-# 	)
-# 	section = models.ForeignKey('Section')
-# 	bank = models.ForeignKey('legotestquestion.Bank')
-# 	typecondition = models.IntegerField(choices=CONDITION_CHOICE)
-# 	pass
+class Condition(models.Model):
+	CONDITION_CHOICE = (
+        (0, 'random'),
+        (1, 'choose')
+	)
+	section = models.ForeignKey('Section')
+	bank = models.ForeignKey('legotestquestion.Bank')
+	typecondition = models.IntegerField(choices=CONDITION_CHOICE)
+	pass
