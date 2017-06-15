@@ -2,16 +2,23 @@ from django.db import models
 
 class Test(models.Model): 
 	name = models.CharField(max_length=50) #Test Name
-	image = models.ImageField(upload_to = 'image/')
+	image = models.ImageField(upload_to = 'image/', null=True)
 	typetest = models.CharField(null = True , max_length=50)
 	category = models.CharField(max_length=50)
 	overview = models.TextField()
 	provider = models.CharField(max_length=50)
-	condition = models.TextField()
-	max_submit = models.IntegerField()
-	limit= models.IntegerField()
-	expired = models.DateTimeField(null=True)
+	condition = models.TextField() # this is condition detail
+	max_submit = models.IntegerField() #จำนวนครั้งที่ให้สอบ
+	limit= models.IntegerField() #ระยะเวลาในการทำข้อสอบ
+	limit_day = models.IntegerField(null=True)
+	limit_hour = models.IntegerField(null=True)
+	limit_min = models.IntegerField(null=True)
+	expired = models.IntegerField(null=True) #ระยะเวลาที่ให้เข้าสอบ
+	expired_day = models.IntegerField(null=True)
+	expired_hour = models.IntegerField(null=True)
+	expired_min = models.IntegerField(null=True)
 	descripe = models.TextField()
+
 
 class Section(models.Model):
 	PULL_CHOICES = (
