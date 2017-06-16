@@ -4,12 +4,12 @@ class Test(models.Model):
 	name = models.CharField(max_length=50) #Test Name
 	image = models.ImageField(upload_to = 'image/', null=True)
 	typetest = models.CharField(null = True , max_length=50)
-	category = models.CharField(max_length=50)
-	overview = models.TextField()
-	provider = models.CharField(max_length=50)
-	condition = models.TextField() # this is condition detail
-	max_submit = models.IntegerField() #จำนวนครั้งที่ให้สอบ
-	limit= models.IntegerField() #ระยะเวลาในการทำข้อสอบ
+	category = models.CharField(max_length=50, null=True)
+	overview = models.TextField(null=True)
+	provider = models.CharField(max_length=50, null=True)
+	condition = models.TextField(null=True) # this is condition detail
+	max_submit = models.IntegerField(default=0) #จำนวนครั้งที่ให้สอบ
+	limit= models.IntegerField(default=0) #ระยะเวลาในการทำข้อสอบ
 	limit_day = models.IntegerField(null=True)
 	limit_hour = models.IntegerField(null=True)
 	limit_min = models.IntegerField(null=True)
@@ -17,7 +17,7 @@ class Test(models.Model):
 	expired_day = models.IntegerField(null=True)
 	expired_hour = models.IntegerField(null=True)
 	expired_min = models.IntegerField(null=True)
-	descripe = models.TextField()
+	descripe = models.TextField(null=True)
 
 
 class Section(models.Model):
@@ -37,6 +37,7 @@ class Section(models.Model):
 
 class Question(models.Model):
     questionid = models.ForeignKey('legotestquestion.Question', null=True)
+    sectionid = models.ForeignKey('Section', null=True)
 	# sectionNum = models.ForeignKey(Section)
 	# typequestion = models.CharField(default = "Section.Type << how to do" , max_length=50)
 	# name = models.CharField(max_length=50)
@@ -48,6 +49,6 @@ class Condition(models.Model):
         (0, 'random'),
         (1, 'choose')
 	)
-	section = models.ForeignKey('Section')
+	section = models.ForeignKey('Section', null=True)
 	bank = models.ForeignKey('legotestquestion.Bank')
 	typecondition = models.IntegerField(choices=CONDITION_CHOICE)
