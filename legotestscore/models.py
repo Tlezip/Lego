@@ -6,5 +6,5 @@ class score(models.Model):
 class scoresection(models.Model):
 	# userid = models.ForeignKey() Get from user table
 	testid = models.ForeignKey('legotest.Test')
-	sectionid = models.IntegerField()
+	sectionid = models.ForeignKey('legotest.Section')
 	score_section = models.IntegerField()
