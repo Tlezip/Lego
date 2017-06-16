@@ -12,8 +12,8 @@ class APITest(TestCase):
 
     def test_post(self):
         request = self.client.post('/api/course/')
-        print(request.status_code)
-        assert request.status_code == 405
+        # print(request.status_code)
+        assert request.status_code == 403
 
 # from django.test import TestCase
 # from legocourse.models import *
