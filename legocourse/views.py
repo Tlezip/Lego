@@ -1,6 +1,9 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+from rest_framework import viewsets
+from legocourse.serializers import CourseSerializer
+from legocourse.models import Course
 
-from django.shortcuts import render
 
-# Create your views here.
+class CourseViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+    #permission_classes = [IsAccountAdminOrReadOnly]
