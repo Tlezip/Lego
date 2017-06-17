@@ -30,11 +30,9 @@ class TestCase_Create(TestCase):
     def test_get(self):
         response = self.client.get('/api/test/')
         assert response.status_code == 200
-        # print(response.content)
 
     def test_post(self):
         response = self.client.post('/api/test/', {'name': 'Math Test'}, format='json')
-        # print(response.status_code)
         assert response.status_code == 403
 
     def test_put(self):
@@ -43,8 +41,22 @@ class TestCase_Create(TestCase):
 
     def test_patch(self):
         response = self.client.patch('/api/test/', {'name': 'Math Test'}, format='json')
-        # print(response.status_code)
         assert response.status_code == 403
+
+    def test_is_display(self):
+        Test.objects.create(name="Math Test", 
+                          typetest="Choice", 
+                          category="AIS Products", 
+                          overview="this is overview", 
+                          provider="Tlezip", 
+                          condition="This is condition detail", 
+                          max_submit=5, 
+                          limit=0,
+                          expired=0, 
+                          descripe="this is descripe",
+                          is_display = False,
+                          )
+
 
 
 

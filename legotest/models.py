@@ -1,23 +1,47 @@
 from django.db import models
 
-class Test(models.Model): 
+class Test(models.Model):
+	CATEGORY_CHOICE = (
+		(0, 'AIS Products & Services'),
+		(1, 'Handset & Device & Gadget'),
+		(2, 'IT Development'),
+		(3, 'Language Center'),
+		(4, 'Customer Services'),
+		(5, 'Corporate Culture'),
+		(6, 'Leadership Management'),
+		(7, 'Business Acumen'),
+		(8, 'Compliance & Regulation'),
+		(9, 'Ethics & Policy'),
+		(10, 'Personal Development'),
+		(11, 'Innovations'),
+		(12, 'Office Productivity')
+	)
+	PROVIDER_CHOICE = (
+		(0, 'AIS Center'),
+		(1, 'AIS Academy'),
+		(2, 'CSM (Service)'),
+		(3, 'CMD (TWZ)'),
+		(4, 'ACC (Call Center)'),
+		(5, 'TKM (Technical)')
+	)
 	name = models.CharField(max_length=50) #Test Name
-	image = models.ImageField(upload_to = 'image/', null=True)
-	typetest = models.CharField(null = True , max_length=50)
-	category = models.CharField(max_length=50, null=True)
-	overview = models.TextField(null=True)
-	provider = models.CharField(max_length=50, null=True)
-	condition = models.TextField(null=True) # this is condition detail
+	image = models.ImageField(upload_to = 'image/', null=True, blank=True)
+	# typetest = models.CharField(null = True , max_length=50)
+	category = models.IntegerField(choices=CATEGORY_CHOICE, blank=True, null=True)
+	overview = models.TextField(null=True, blank=True)
+	provider = models.IntegerField(choices=PROVIDER_CHOICE , null=True, blank=True)
+	condition = models.TextField(null=True, blank=True) # this is condition detail
 	max_submit = models.IntegerField(default=0) #จำนวนครั้งที่ให้สอบ
 	limit= models.IntegerField(default=0) #ระยะเวลาในการทำข้อสอบ
-	limit_day = models.IntegerField(null=True)
-	limit_hour = models.IntegerField(null=True)
-	limit_min = models.IntegerField(null=True)
-	expired = models.IntegerField(null=True) #ระยะเวลาที่ให้เข้าสอบ
-	expired_day = models.IntegerField(null=True)
-	expired_hour = models.IntegerField(null=True)
-	expired_min = models.IntegerField(null=True)
-	descripe = models.TextField(null=True)
+	limit_day = models.IntegerField(null=True, blank=True)
+	limit_hour = models.IntegerField(null=True, blank=True)
+	limit_min = models.IntegerField(null=True, blank=True)
+	expired = models.IntegerField(null=True, blank=True) #ระยะเวลาที่ให้เข้าสอบ
+	expired_day = models.IntegerField(null=True, blank=True)
+	expired_hour = models.IntegerField(null=True, blank=True)
+	expired_min = models.IntegerField(null=True, blank=True)
+	descripe = models.TextField(null=True, blank=True)
+	is_display = models.BooleanField(default=False)
 
 
 class Section(models.Model):
@@ -25,10 +49,17 @@ class Section(models.Model):
 		(0, 'Basic'),
 		(1, 'Bank')
 	)
+	QUESTION_CHOICE=(
+		(0, 'Question'),
+		(1, 'Fill Description'),
+		(2, 'Information'),
+		(3, 'Match')
+	)
 	test = models.ForeignKey('Test', default=0)
 	pull = models.IntegerField(choices=PULL_CHOICES , default=0)
 	num = models.AutoField(primary_key=True)
 	name = models.CharField(max_length=50, default='')
+	typequestion = models.IntegerField(choices=QUESTION_CHOICE, blank=True, null=True)
 	full_score = models.IntegerField(default=0)
 	pass_score = models.IntegerField()
 
@@ -51,4 +82,4 @@ class Condition(models.Model):
 	)
 	section = models.ForeignKey('Section', null=True)
 	bank = models.ForeignKey('legotestquestion.Bank')
-	typecondition = models.IntegerField(choices=CONDITION_CHOICE)
+	typecondition = models.IntegerField(choices=CONDITION_CHOICE, default=2)
