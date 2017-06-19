@@ -10,16 +10,16 @@ class CourseSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'image', 'overview', 'condition', 'desc', 'is_display')
 
 
-class SectionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Section
-        fields = ('id', 'course', 'name', 'sort')
-
-
 class MaterialSerializer(serializers.ModelSerializer):
     class Meta:
         model = Material
         fields = ('id', 'section', 'content_type', 'content', 'sort')
+
+class SectionSerializer(serializers.ModelSerializer):
+    material = MaterialSerializer(many=True, read_only=True)
+    class Meta:
+        model = Section
+        fields = ('id', 'course', 'name', 'sort', 'material')
 
 
 class CourseDetailSerializer(serializers.ModelSerializer):
