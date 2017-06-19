@@ -1,12 +1,14 @@
 from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework.routers import DefaultRouter
-from legocourse.views import CourseViewSet
+from legocourse.views import *
+from legocourse.view_coursedetail import *
 from legotest.views import TestViewSet
 
 
 router = DefaultRouter()
-router.register(r'course', CourseViewSet)
+router.register(r'course', CourseDisplayViewSet)
+router.register(r'course_detail', CourseDetailViewSet)
 router.register(r'test', TestViewSet)
 
 urlpatterns = [
