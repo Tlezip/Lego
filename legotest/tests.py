@@ -3,6 +3,12 @@ from rest_framework.test import APIRequestFactory
 from legotest.models import Test
 from rest_framework.test import APITestCase,APIClient
 from django.contrib.auth.models import User
+from django.http import HttpRequest
+import requests
+import urllib
+import json
+from django.core import serializers
+from legotest.serializer import TestSerializer
 # Create your tests here.
 
 class TestCase_Create(TestCase):
@@ -43,19 +49,42 @@ class TestCase_Create(TestCase):
         response = self.client.patch('/api/test/', {'name': 'Math Test'}, format='json')
         assert response.status_code == 403
 
-    def test_is_display(self):
-        Test.objects.create(name="Math Test", 
-                          typetest="Choice", 
-                          category="AIS Products", 
-                          overview="this is overview", 
-                          provider="Tlezip", 
-                          condition="This is condition detail", 
-                          max_submit=5, 
-                          limit=0,
-                          expired=0, 
-                          descripe="this is descripe",
-                          is_display = False,
-                          )
+    def test_idp(self):
+        response = urllib.request.urlopen('http://localhost:8000/api/test/')
+        data = json.load(response)
+        output_dict = [x for x in data if x['name'] == 'Tlezip']
+        print(output_dict)
+        print("\n")
+        b = Test.objects.create(name="Tlezip", is_display = True, id=3, category=2, overview="zzz", condition="xc", descripe='')
+        c = TestSerializer(b)
+        print(c.data)
+        assert c.data not in data
+        
+        # b = list(Test.objects.filter(name="Tlezip"))
+        # assert b_as_json == data
+        # a = Test.objects.create(name="Tlezip", is_display = False,)
+        # a = list(Test.objects.filter(name="Tlezip"))
+        # assert a not in getdata
+        # print(c.context['name'])
+        # response = c.get('/api/test/')
+        # c = Client()
+        # response = self.client.get('/api/test/')
+        # print(response.json())
+
+        # if a != []:
+        #     print("Not")
+        # for a in Test.objects.filter(name="Tlezip"):
+        #     print(a.name)
+
+    # def test_is_display(self):
+    #     response = Test.objects.create(name="Math Test", 
+    #                       is_display = False,
+    #                       )
+        # filt = {'name': 'Tlezip'}
+        # getdata = requests.get('http://localhost:8000/api/test/', data=filt)
+        # print(getdata.content)
+    #     print("123")
+    #     # assert response in 
 
 
 
