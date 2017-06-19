@@ -28,14 +28,17 @@ class APITest(TestCase):
         assert request.status_code == 403
 
     def test_get_display(self):
-        temp = CourseSerializer(self.course)
+        self.course.is_display = True
+        self.course.save()
         response = self.client.get('/api/course/')
-        if(self.course.is_display == False):
-            assert temp.data in response.data
-            print(response.json())
+        course = CourseSerializer(self.course)
+        assert course.data in response.data
 
-        else:
-            assert temp.data not in response.data
+        self.course.is_display = False
+        self.course.save()
+        response = self.client.get('/api/course/')
+        course = CourseSerializer(self.course)
+        assert course.data not in response.data
 
     # def test_get_section(self):
     #     response = self.client.get('/api/course_detail/')
