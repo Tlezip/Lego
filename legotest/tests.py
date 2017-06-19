@@ -16,23 +16,6 @@ class TestCase_Create(TestCase):
     def setUp(self):
         self.client = APIClient()
 
-    # def test_by_default(self):
-    # # """
-    # # By default, the test client is CSRF exempt.
-    # # """
-    #     response = self.client.post('/lego/legotest/', {'name': 'Math Test', 
-    #                                 'typetest' : "Choice", 
-    #                                 'category' : "AIS Products", 
-    #                                 'overview' : "This is overview", 
-    #                                 'provider' : "Tlezip",
-    #                                 'conndition' : "This is condition detail",
-    #                                 'max_submit' : 5, 
-    #                                 'limit' : 0, 
-    #                                 'expired' : 0,
-    #                                 'descripe' : "This is descripe",}, format='json')
-    #     print(response.content)
-    #     assert response.status_code != 200
-
     def test_get(self):
         response = self.client.get('/api/test/')
         assert response.status_code == 200
@@ -49,27 +32,16 @@ class TestCase_Create(TestCase):
         response = self.client.patch('/api/test/', {'name': 'Math Test'}, format='json')
         assert response.status_code == 403
 
-    def test_idp(self):
-        response = urllib.request.urlopen('http://localhost:8000/api/test/')
-        data = json.load(response)
-        output_dict = [x for x in data if x['name'] == 'Tlezip']
-        print(output_dict)
-        print("\n")
-        b = Test.objects.create(name="Tlezip", is_display = True, id=3, category=2, overview="zzz", condition="xc", descripe='')
-        c = TestSerializer(b)
-        print(c.data)
-        assert c.data not in data
-        
-        # b = list(Test.objects.filter(name="Tlezip"))
-        # assert b_as_json == data
-        # a = Test.objects.create(name="Tlezip", is_display = False,)
-        # a = list(Test.objects.filter(name="Tlezip"))
-        # assert a not in getdata
-        # print(c.context['name'])
-        # response = c.get('/api/test/')
-        # c = Client()
-        # response = self.client.get('/api/test/')
-        # print(response.json())
+    def test_is_display(self):
+        test_1 = Test.objects.create(name='Tlezip', is_display=True)
+        c = TestSerializer(test_1)
+        # print(c.data)
+        response = self.client.get('/api/test/', {'name': 'Tlezip'})
+        # print(response.data)
+        if test_1.is_display == True:
+            assert c.data in response.data
+        else:
+            assert c.data not in response.data
 
         # if a != []:
         #     print("Not")
