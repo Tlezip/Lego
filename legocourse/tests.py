@@ -30,7 +30,7 @@ class APITest(TestCase):
     def test_get_display(self):
         temp = CourseSerializer(self.course)
         response = self.client.get('/api/course/')
-        if(self.course.is_display == False):
+        if(self.course.is_display == True):
             assert temp.data in response.data
             print(response.json())
 
