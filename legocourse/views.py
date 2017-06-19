@@ -3,7 +3,6 @@ from legocourse.serializers import CourseSerializer
 from legocourse.models import Course
 
 
-class CourseViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Course.objects.all()
+class CourseDisplayViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Course.objects.filter(is_display=True)
     serializer_class = CourseSerializer
-    #permission_classes = [IsAccountAdminOrReadOnly]

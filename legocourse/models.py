@@ -13,7 +13,7 @@ class Course(models.Model):
 
 
 class Section(models.Model):
-    course = models.ForeignKey(Course)
+    course = models.ForeignKey(Course, related_name='section')
     name = models.CharField(max_length=200)
     sort = models.IntegerField(db_index=True, default=1)
 
@@ -24,7 +24,7 @@ class Section(models.Model):
 
 
 class Material(models.Model):
-    section = models.ForeignKey(Section)
+    section = models.ForeignKey(Section, related_name='material')
 
     content_type = models.ForeignKey('contenttypes.ContentType')
     content = models.IntegerField()
