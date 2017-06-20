@@ -1,6 +1,6 @@
 from django.test import TestCase,Client
 from rest_framework.test import APIRequestFactory
-from legotest.models import Test
+from legotest.models import Test,Section
 from rest_framework.test import APITestCase,APIClient
 from django.contrib.auth.models import User
 from django.http import HttpRequest
@@ -15,7 +15,10 @@ class TestCase_Create(TestCase):
 	
     def setUp(self):
         self.client = APIClient()
-
+        self.test = Test.objects.create(name='Tlezip', is_display=True)
+        self.test2 = Test.objects.create(name='qwerty', is_display=True)
+        self.section = Section.objects.create(name='Section1', test=self.test)
+        self.all = Test.objects.all()
     def test_get(self):
         response = self.client.get('/api/test/')
         assert response.status_code == 200
@@ -33,16 +36,48 @@ class TestCase_Create(TestCase):
         assert response.status_code == 403
 
     def test_is_display(self):
-        test_1 = Test.objects.create(name='Tlezip', is_display=True)
-        c = TestSerializer(test_1)
-        # print(c.data)
-        response = self.client.get('/api/test/', {'name': 'Tlezip'})
-        # print(response.data)
-        if test_1.is_display == True:
-            assert c.data in response.data
-        else:
-            assert c.data not in response.data
+        self.test.is_display = True
+        self.test.save()
+        c = TestSerializer(self.test)
+        response = self.client.get('/api/test/')
+        assert c.data in response.data
 
+        self.test.is_display = False
+        self.test.save()
+        c = TestSerializer(self.test)
+        assert c.data not in response.data
+
+    def test_section(self):
+        response = self.client.get('/api/test/2/')
+        # print(response.json()['section'])
+        if response.json()['section'] == []:
+            assert response.json()['is_display'] == False
+        section2 = Section.objects.create(name='Section2', test=self.test2)
+        assert response.json()['is_display'] == True or False
+
+        # queryset = Test.objects.filter(id=self.test.id).select_releated('content')
+        # print(self.test2.content)
+        # if self.test2.section == []:
+        #     print("Error")
+        # print(self.test2)
+        # c = TestSerializer(self.test2)
+        # print(c.data)
+        # results = serializers.serialize('json', response)
+        # print(results.id)
+        # a = Test.objects.filter(section=None)
+        # for x in a:
+            # assert x.is_display == False
+
+
+        # if len(response.data) == 0:
+        #     assert not isinstance(False, Test)
+        #     for x in self.all:
+        #         print(x.name)
+        #         x.is_display = False
+        #         x.save()
+        # else:
+        #     print("456")
+        
         # if a != []:
         #     print("Not")
         # for a in Test.objects.filter(name="Tlezip"):
@@ -53,7 +88,7 @@ class TestCase_Create(TestCase):
     #                       is_display = False,
     #                       )
         # filt = {'name': 'Tlezip'}
-        # getdata = requests.get('http://localhost:8000/api/test/', data=filt)
+        # getdata = requests.get('http://localhost:8000/api/test/')
         # print(getdata.content)
     #     print("123")
     #     # assert response in 
@@ -184,5 +219,3 @@ class TestCase_Create(TestCase):
 # 		b = Test.objects.get(name="Math Test")
 # 		b.name = "Math Test2"
 # 		b.save()
-
-

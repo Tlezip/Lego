@@ -46,7 +46,9 @@ INSTALLED_APPS = [
     'legoscorm',
     'legotestquestion',
     'django_extensions',
-    'rest_framework_swagger'
+    'legotestscore',
+    'legotestanswer',
+    'rest_framework_swagger',
 ]
 
 REST_FRAMEWORK = {

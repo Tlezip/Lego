@@ -2,8 +2,10 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework.routers import DefaultRouter
 from legocourse.views import *
-from legotest.views import TestViewSet
+from legocourse.view_coursedetail import *
+from legotest.views import *
 from rest_framework_swagger.views import get_swagger_view
+
 
 schema_view = get_swagger_view(title='Pastebin API')
 
