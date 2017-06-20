@@ -3,7 +3,8 @@ from django.contrib import admin
 from rest_framework.routers import DefaultRouter
 from legocourse.views import *
 from legocourse.view_coursedetail import *
-from legotest.views import TestViewSet
+from legotest.views import *
+from rest_framework_swagger.views import get_swagger_view
 
 
 router = DefaultRouter()
@@ -11,7 +12,10 @@ router.register(r'course', CourseDisplayViewSet)
 router.register(r'course_detail', CourseDetailViewSet)
 router.register(r'test', TestViewSet)
 
+schema_view = get_swagger_view(title='Pastebin API')
+
 urlpatterns = [
+	url(r'^$', schema_view),
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(router.urls)),
 ]

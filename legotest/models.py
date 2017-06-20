@@ -43,7 +43,6 @@ class Test(models.Model):
 	descripe = models.TextField(null=True, blank=True)
 	is_display = models.BooleanField(default=False)
 
-
 class Section(models.Model):
 	PULL_CHOICES = (
 		(0, 'Basic'),
@@ -55,13 +54,13 @@ class Section(models.Model):
 		(2, 'Information'),
 		(3, 'Match')
 	)
-	test = models.ForeignKey('Test', default=0)
+	test = models.ForeignKey('Test', blank=True, null=True, related_name='section')
 	pull = models.IntegerField(choices=PULL_CHOICES , default=0)
 	num = models.AutoField(primary_key=True)
-	name = models.CharField(max_length=50, default='')
+	name = models.CharField(max_length=50)
 	typequestion = models.IntegerField(choices=QUESTION_CHOICE, blank=True, null=True)
 	full_score = models.IntegerField(default=0)
-	pass_score = models.IntegerField()
+	pass_score = models.IntegerField(default=0)
 
 	# SectionID = models.AutoField(primary_key=True)
 	# typequestion = models.CharField(max_length=50)
