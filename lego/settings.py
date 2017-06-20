@@ -46,8 +46,11 @@ INSTALLED_APPS = [
     'legoscorm',
     'legotestquestion',
     'django_extensions',
+    'legotestscore',
+    'legotestanswer',
     'rest_framework_swagger',
-    
+]
+
 REST_FRAMEWORK = {
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     'DEFAULT_PERMISSION_CLASSES': [
