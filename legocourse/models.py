@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 
 
 class Course(models.Model):
@@ -24,12 +26,28 @@ class Section(models.Model):
 
 
 class Material(models.Model):
+    TYPE_CHOICES = {
+        (0, 'Video'),
+        (1, 'WebLink'),
+        (2, 'Document'),
+        (3, 'Test'),
+        (4, 'Audio'),
+        (5, 'Scorm'),
+        (6, 'FileUpload')
+    }
+
     section = models.ForeignKey(Section, related_name='material')
-
-    content_type = models.ForeignKey('contenttypes.ContentType')
-    content = models.IntegerField()
-
+    types = models.PositiveSmallIntegerField(choices=TYPE_CHOICES, default=0)
     sort = models.IntegerField(db_index=True, default=1)
+
+    limit = models.Q(app_label='legovideo', model='video') | models.Q(app_label='legomaterial', model='weblink') | \
+            models.Q(app_label='legomaterial', model='document') | models.Q(app_label='legotest', model='test') | \
+            models.Q(app_label='legoaudio', model='audio') | models.Q(app_label='legoscorm', model='scorm') | \
+            models.Q(app_label='legomaterial', model='fileupload')
+
+    content_type = models.ForeignKey(ContentType, limit_choices_to=limit)
+    object_id = models.PositiveSmallIntegerField(default=1)
+    content_object = GenericForeignKey('content_type', 'object_id')
 
     def create(self):
         self.sort = Material.object.count() + 1

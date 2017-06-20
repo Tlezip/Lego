@@ -7,7 +7,7 @@ from legocourse.models import Material
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
-        fields = ('id', 'name', 'image', 'overview', 'condition', 'desc', 'is_display')
+        fields = ('id', 'name', 'image', 'is_display')
 
 
 class MaterialSerializer(serializers.ModelSerializer):
@@ -15,8 +15,10 @@ class MaterialSerializer(serializers.ModelSerializer):
         model = Material
         fields = ('id', 'section', 'content_type', 'content', 'sort')
 
+
 class SectionSerializer(serializers.ModelSerializer):
     material = MaterialSerializer(many=True, read_only=True)
+
     class Meta:
         model = Section
         fields = ('id', 'course', 'name', 'sort', 'material')

@@ -4,5 +4,6 @@ from legocourse.models import Course
 
 
 class CourseDisplayViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Course.objects.filter(is_display=True)
+    queryset = Course.objects.exclude(section__material=None).filter(is_display=True)
     serializer_class = CourseSerializer
+
