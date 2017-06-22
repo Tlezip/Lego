@@ -10,8 +10,7 @@ class APITest(TestCase):
         self.client = APIClient()
         ctype = ContentType.objects.get(model='video')
         self.course = Course.objects.create(name='course1', is_display=False)
-        self.section = Section.objects.create(name='section1', course=self.course)
-        self.material = Material.objects.create(content_type=ctype, section=self.section)
+        # self.material = Material.objects.create(content_type=ctype, section=self.section)
 
     def test_get(self):
         request = self.client.get('/api/course/')
@@ -41,7 +40,5 @@ class APITest(TestCase):
         response = self.client.get('/api/course/')
         assert course1.data in response.data
 
-    # def test_get_section(self):
-    #     # self.course.section_set.all()
-    #     response = self.client.get('/api/course_detail/')
-    #     # assert Course.objects.filter(section__isnull=True).count() == 0
+    def test_get_section(self):
+        pass

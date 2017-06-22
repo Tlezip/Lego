@@ -17,7 +17,7 @@ class Document(models.Model):
     timeupdate = models.DateTimeField(auto_now=True)
 
 
-class FileUpload(models.Model):
+class FileDownload(models.Model):
     name = models.CharField(max_length=200)
     image = models.ImageField(upload_to='fileupload/%Y/%m/', blank=True)
     file = models.FileField(upload_to='fileupload/%Y/%m/')

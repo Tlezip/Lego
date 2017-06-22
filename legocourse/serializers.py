@@ -1,7 +1,5 @@
 from rest_framework import serializers
-from legocourse.models import Course
-from legocourse.models import Section
-from legocourse.models import Material
+from legocourse.models import *
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -13,7 +11,7 @@ class CourseSerializer(serializers.ModelSerializer):
 class MaterialSerializer(serializers.ModelSerializer):
     class Meta:
         model = Material
-        fields = ('id', 'section', 'content_type', 'content', 'sort')
+        fields = ('id', 'content_type', 'content_object', 'sort')
 
 
 class SectionSerializer(serializers.ModelSerializer):
@@ -21,7 +19,7 @@ class SectionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Section
-        fields = ('id', 'course', 'name', 'sort', 'material')
+        fields = ('id', 'name', 'sort', 'material')
 
 
 class CourseDetailSerializer(serializers.ModelSerializer):
@@ -29,4 +27,4 @@ class CourseDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Course
-        fields = ('id', 'name', 'image', 'overview', 'condition', 'desc', 'is_display', 'section')
+        fields = ('id', 'name', 'image', 'is_display', 'section')

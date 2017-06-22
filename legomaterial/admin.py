@@ -4,4 +4,4 @@ from .models import *
 
 admin.site.register(WebLink)
 admin.site.register(Document)
-admin.site.register(FileUpload)
+admin.site.register(FileDownload)

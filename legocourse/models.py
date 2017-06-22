@@ -4,11 +4,11 @@ from django.contrib.contenttypes.models import ContentType
 
 
 class Course(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=120)
     image = models.ImageField(upload_to='course/%Y/%m/', blank=True, null=True)
-    overview = models.TextField(max_length=250, blank=True, null=True)
+    overview = models.TextField(blank=True)
     condition = models.TextField(blank=True, null=True)
-    desc = models.TextField(blank=True, null=True)
+    desc = models.TextField(blank=True)
     is_display = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True, db_index=True)
     timeupdate = models.DateTimeField(auto_now=True)
@@ -28,24 +28,24 @@ class Section(models.Model):
 class Material(models.Model):
     TYPE_CHOICES = {
         (0, 'Video'),
-        (1, 'WebLink'),
+        (1, 'Web Link'),
         (2, 'Document'),
         (3, 'Test'),
         (4, 'Audio'),
         (5, 'Scorm'),
-        (6, 'FileUpload')
+        (6, 'File Upload')
     }
+
+    limit = models.Q(app_label='legovideo', model='video') | models.Q(app_label='legomaterial', model='weblink') | \
+            models.Q(app_label='legomaterial', model='document') | models.Q(app_label='legotest', model='test') | \
+            models.Q(app_label='legoaudio', model='audio') | models.Q(app_label='legoscorm', model='scorm') | \
+            models.Q(app_label='legomaterial', model='filedownload')
 
     section = models.ForeignKey(Section, related_name='material')
     types = models.PositiveSmallIntegerField(choices=TYPE_CHOICES, default=0)
     sort = models.IntegerField(db_index=True, default=1)
 
-    limit = models.Q(app_label='legovideo', model='video') | models.Q(app_label='legomaterial', model='weblink') | \
-            models.Q(app_label='legomaterial', model='document') | models.Q(app_label='legotest', model='test') | \
-            models.Q(app_label='legoaudio', model='audio') | models.Q(app_label='legoscorm', model='scorm') | \
-            models.Q(app_label='legomaterial', model='fileupload')
-
-    content_type = models.ForeignKey(ContentType, limit_choices_to=limit)
+    content_type = models.ForeignKey(ContentType, limit_choices_to=limit, on_delete=models.CASCADE)
     object_id = models.PositiveSmallIntegerField(default=1)
     content_object = GenericForeignKey('content_type', 'object_id')
 

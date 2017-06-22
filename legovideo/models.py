@@ -6,7 +6,7 @@ class Video(models.Model):
     name = models.CharField(max_length=200)
     image = models.ImageField(upload_to='video/%Y/%m/', blank=True)
     duration = models.DurationField(default=datetime.timedelta(0))
-    video_url = models.CharField(max_length=200)
+    url = models.CharField(max_length=200)
     status = models.IntegerField(default=0)
     type = models.IntegerField(default=0)
     timestamp = models.DateTimeField(auto_now_add=True, db_index=True)
