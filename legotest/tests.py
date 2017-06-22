@@ -1,9 +1,10 @@
 from django.test import TestCase,Client
 from rest_framework.test import APIRequestFactory
-from legotest.models import Test,Section
+from legotest.models import *
 from rest_framework.test import APITestCase,APIClient
 from django.contrib.auth.models import User
 from django.http import HttpRequest
+from legotestquestion.models import *
 import requests
 import urllib
 import json
@@ -18,6 +19,8 @@ class TestCase_Create(TestCase):
         self.test = Test.objects.create(name='Tlezip', is_display=True)
         self.test2 = Test.objects.create(name='qwerty', is_display=True)
         self.section = Section.objects.create(name='Section1', test=self.test)
+        self.realquestion = legotestquestion.Question.objects.create(text='qwerty',answer='yes')
+        self.question = Question.objects.create(sectionid=self.section, questionid=self.realquestion.id)
         self.all = Test.objects.all()
     def test_get(self):
         response = self.client.get('/api/test/')
@@ -55,6 +58,8 @@ class TestCase_Create(TestCase):
         section2 = Section.objects.create(name='Section2', test=self.test2)
         assert response.json()['is_display'] == True or False
 
+    def test_Question(self):
+        reponse = self.client.get('/api/test/')
         # queryset = Test.objects.filter(id=self.test.id).select_releated('content')
         # print(self.test2.content)
         # if self.test2.section == []:

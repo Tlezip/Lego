@@ -4,6 +4,7 @@ from rest_framework.routers import DefaultRouter
 from legocourse.views import *
 from legocourse.view_coursedetail import *
 from legotest.views import *
+from legotestquestion.views import *
 from rest_framework_swagger.views import get_swagger_view
 
 
@@ -11,6 +12,8 @@ router = DefaultRouter()
 router.register(r'course', CourseDisplayViewSet)
 router.register(r'course_detail', CourseDetailViewSet)
 router.register(r'test', TestViewSet)
+router.register(r'testquestion', TestQuestionViewSet)
+router.register(r'condition', ConditionViewSet)
 
 schema_view = get_swagger_view(title='Pastebin API')
 

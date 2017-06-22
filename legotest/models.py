@@ -33,15 +33,20 @@ class Test(models.Model):
 	condition = models.TextField(null=True, blank=True) # this is condition detail
 	max_submit = models.IntegerField(default=0) #จำนวนครั้งที่ให้สอบ
 	limit= models.IntegerField(default=0) #ระยะเวลาในการทำข้อสอบ
-	limit_day = models.IntegerField(null=True, blank=True)
-	limit_hour = models.IntegerField(null=True, blank=True)
-	limit_min = models.IntegerField(null=True, blank=True)
+	limit_time = models.DurationField(null=True, blank=True)
 	expired = models.IntegerField(null=True, blank=True) #ระยะเวลาที่ให้เข้าสอบ
-	expired_day = models.IntegerField(null=True, blank=True)
-	expired_hour = models.IntegerField(null=True, blank=True)
-	expired_min = models.IntegerField(null=True, blank=True)
+	expired_time = models.DurationField(null=True, blank=True)
 	descripe = models.TextField(null=True, blank=True)
 	is_display = models.BooleanField(default=False)
+	timestamp = models.DateTimeField(auto_now_add=True, db_index=True)
+	timeupdate = models.DateTimeField(auto_now=True)
+	# def __init__(self):
+	# 	a = Section.objects.filter(test=self.id)
+	# 	if a == None:
+	# 		is_display=False
+
+	def __str__(self):
+		return 'Test: ' + self.name
 
 class Section(models.Model):
 	PULL_CHOICES = (
@@ -61,13 +66,16 @@ class Section(models.Model):
 	typequestion = models.IntegerField(choices=QUESTION_CHOICE, blank=True, null=True)
 	full_score = models.IntegerField(default=0)
 	pass_score = models.IntegerField(default=0)
+	is_display = models.BooleanField(default=False)
+	def __str__(self):
+		return 'Section: ' + self.name
 
 	# SectionID = models.AutoField(primary_key=True)
 	# typequestion = models.CharField(max_length=50)
 
 class Question(models.Model):
-    questionid = models.ForeignKey('legotestquestion.Question', null=True)
-    sectionid = models.ForeignKey('Section', null=True)
+    questionid = models.ForeignKey('legotestquestion.Question', null=True, related_name='question')
+    sectionid = models.ForeignKey('Section', null=True, related_name='question')
 	# sectionNum = models.ForeignKey(Section)
 	# typequestion = models.CharField(default = "Section.Type << how to do" , max_length=50)
 	# name = models.CharField(max_length=50)
@@ -81,4 +89,6 @@ class Condition(models.Model):
 	)
 	section = models.ForeignKey('Section', null=True)
 	bank = models.ForeignKey('legotestquestion.Bank')
+	numquestion = models.IntegerField(default=0)
 	typecondition = models.IntegerField(choices=CONDITION_CHOICE, default=2)
+	# keepquestion = models.ManyToManyField('legotestquestion.Bank')

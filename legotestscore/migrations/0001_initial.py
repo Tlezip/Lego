@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
+import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
@@ -10,18 +11,17 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ('legotest', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Scorm',
+            name='scoresection',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=200)),
-                ('image', models.ImageField(upload_to='scorm/%Y/%m/')),
-                ('scorm_url', models.CharField(max_length=200)),
-                ('timestamp', models.DateTimeField(auto_now_add=True, db_index=True)),
-                ('timeupdate', models.DateTimeField(auto_now=True)),
+                ('score_section', models.IntegerField()),
+                ('sectionid', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='legotest.Section')),
+                ('testid', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='legotest.Test')),
             ],
         ),
     ]
