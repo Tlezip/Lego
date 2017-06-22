@@ -54,7 +54,12 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     'DEFAULT_PERMISSION_CLASSES': [
+<<<<<<< HEAD
         'rest_framework.permissions.DjangoModelPermissions'
+=======
+        # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        'rest_framework.permissions.DjangoModelPermissions',
+>>>>>>> 6b21d74a9c21f2309a437d20deaa60350a537d6b
     ],
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
 }
