@@ -8,17 +8,16 @@ from legotestquestion.views import *
 from rest_framework_swagger.views import get_swagger_view
 
 
+schema_view = get_swagger_view(title='Pastebin API')
+
 router = DefaultRouter()
 router.register(r'course', CourseDisplayViewSet)
-router.register(r'course_detail', CourseDetailViewSet)
 router.register(r'test', TestViewSet)
 router.register(r'testquestion', TestQuestionViewSet)
 router.register(r'condition', ConditionViewSet)
 
-schema_view = get_swagger_view(title='Pastebin API')
-
 urlpatterns = [
-	url(r'^$', schema_view),
+    url(r'^$', schema_view),
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(router.urls)),
 ]

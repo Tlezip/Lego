@@ -33,8 +33,9 @@ class Migration(migrations.Migration):
             name='Material',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content', models.IntegerField()),
+                ('types', models.PositiveSmallIntegerField(choices=[(5, 'Scorm'), (2, 'Document'), (3, 'Test'), (6, 'FileUpload'), (1, 'WebLink'), (4, 'Audio'), (0, 'Video')], default=0)),
                 ('sort', models.IntegerField(db_index=True, default=1)),
+                ('object_id', models.PositiveSmallIntegerField(default=1)),
                 ('content_type', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='contenttypes.ContentType')),
             ],
         ),

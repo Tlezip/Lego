@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=200)),
-                ('image', models.ImageField(upload_to='video/%Y/%m/')),
+                ('image', models.ImageField(blank=True, upload_to='video/%Y/%m/')),
                 ('duration', models.DurationField(default=datetime.timedelta(0))),
                 ('video_url', models.CharField(max_length=200)),
                 ('status', models.IntegerField(default=0)),
